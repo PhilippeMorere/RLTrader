@@ -1,6 +1,7 @@
 import math
 import random
-import qAgent
+from qAgent import QAgent
+from perceptronAgent import PerceptronAgent
 import matplotlib.pyplot as plt
 
 __author__ = 'philippe'
@@ -35,11 +36,11 @@ class World:
 
     def __init__(self):
         self.data_generator = DataGenerator()
-        self.agent = qAgent.QAgent(self.actions)
+        self.agent = PerceptronAgent(self.actions)
         self.agent_is_holding = False
         self.gap = 2.0  # %
         self.not_trading_fee = 0.1  # %
-        self.number_training = 1000000
+        self.number_training = 10000
         self.number_test = 400
         self.all_actions = []
         self.data_generated = []
@@ -67,7 +68,7 @@ class World:
                 self.agent.reward(action, reward, self.agent_is_holding, new_data)
 
             # Get action
-            action = self.agent.get_action(self.agent_is_holding, new_data)
+            action = self.agent.get_action(self.agent_is_holding)
 
             old_data = new_data
             self.data_generator.increase_time()
